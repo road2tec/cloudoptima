@@ -50,19 +50,18 @@ export default function AppShell() {
         <div className="pointer-events-none absolute left-1/3 top-0 h-72 w-[60%] -translate-y-1/2 rounded-full bg-brand opacity-[0.07] blur-3xl" />
         <Topbar onMenu={() => setMobileOpen(true)} onSearch={() => setPaletteOpen(true)} />
         <main className="relative mx-auto w-full max-w-[1480px] flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Suspense fallback={<PageFallback />}>
-                <Outlet />
-              </Suspense>
-            </motion.div>
-          </AnimatePresence>
+          {/* Entrance-only transition: an exit + "wait" step can stall while a lazy page chunk
+              is still loading, leaving the new page stuck at opacity 0. */}
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Suspense fallback={<PageFallback />}>
+              <Outlet />
+            </Suspense>
+          </motion.div>
         </main>
       </div>
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
