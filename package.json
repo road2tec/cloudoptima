@@ -1,0 +1,16 @@
+{
+  "name": "cloudoptima",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CloudOptima — Multi-Cloud Resource Management and Optimization Platform",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently -k -n server,client -c magenta,cyan \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "seed": "npm run seed --prefix server",
+    "start": "npm run start --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
